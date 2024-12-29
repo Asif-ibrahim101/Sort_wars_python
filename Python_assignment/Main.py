@@ -1,12 +1,14 @@
 import sys
 import numpy as np
 import time
+import psutil
+import os
 
-# for maximum resurssion depth 
+# Set recursion limit
 sys.setrecursionlimit(10**6)
 
 def generate_random_numbers(size):
-    return np.random.randint(100000, 1000000, size=size)
+    return np.random.randint(10000, 100000, size=size)
 
 def generate_reversed_random_numbers(size):
     numbers = np.arange(999999, 999999-size, -1)
@@ -14,7 +16,6 @@ def generate_reversed_random_numbers(size):
 
 # Merge Sort with comparison counter
 def merge_sort(arr):
-    # Using a list for the counter so it can be modified in nested functions
     comparisons = [0]
     
     def merge(left, right):
@@ -22,7 +23,7 @@ def merge_sort(arr):
         i = j = 0
         
         while i < len(left) and j < len(right):
-            comparisons[0] += 1  # Count each comparison between elements
+            comparisons[0] += 1
             if left[i] <= right[j]:
                 result.append(left[i])
                 i += 1
@@ -52,16 +53,13 @@ def quick_sort(arr):
     comparisons = [0]
     
     def partition(arr, left, right):
-        # using random index as an pivot index
         random_idx = np.random.randint(left, right + 1)
-
-        # swaping the random element with the last element
         arr[random_idx], arr[right] = arr[right], arr[random_idx]
         pivot = arr[right]
         i = left - 1
         
         for j in range(left, right):
-            comparisons[0] += 1  # Count each comparison with pivot
+            comparisons[0] += 1
             if arr[j] <= pivot:
                 i += 1
                 arr[i], arr[j] = arr[j], arr[i]
@@ -79,6 +77,13 @@ def quick_sort(arr):
     sort(arr_copy, 0, len(arr_copy) - 1)
     return arr_copy, comparisons[0]
 
+
+def get_memory_usage():
+    # Get the current process
+    process = psutil.Process()
+    # Get memory info in KB (divide by 1024 to convert from bytes to KB)
+    return process.memory_info().rss / 1024
+
 # Test with different array sizes
 sizes = [10000, 100000]
 
@@ -90,20 +95,41 @@ for size in sizes:
     
     # Test Merge Sort
     print("\nMerge Sort:")
+    
+    start_memory = get_memory_usage()
     start_time = time.time()
     sorted_random, comparisons = merge_sort(random_arr)
-    print(f"Random array - Time: {(time.time() - start_time):.4f} seconds, Comparisons: {comparisons}")
+    memory_used = get_memory_usage() - start_memory
+    print(f"Random array - Time: {(time.time() - start_time):.4f} seconds")
+    print(f"Comparisons: {comparisons}")
+    print(f"Memory Usage: {memory_used:.2f} KB")
     
+    # Reversed array
+    start_memory = get_memory_usage()
     start_time = time.time()
     sorted_reversed, comparisons = merge_sort(reversed_arr)
-    print(f"Reversed array - Time: {(time.time() - start_time):.4f} seconds, Comparisons: {comparisons}")
+    memory_used = get_memory_usage() - start_memory
+    print(f"\nReversed array - Time: {(time.time() - start_time):.4f} seconds")
+    print(f"Comparisons: {comparisons}")
+    print(f"Memory Usage: {memory_used:.2f} KB")
     
     # Test Quick Sort
     print("\nQuick Sort:")
+    
+    # Random array
+    start_memory = get_memory_usage()
     start_time = time.time()
     sorted_random, comparisons = quick_sort(random_arr)
-    print(f"Random array - Time: {(time.time() - start_time):.4f} seconds, Comparisons: {comparisons}")
+    memory_used = get_memory_usage() - start_memory
+    print(f"Random array - Time: {(time.time() - start_time):.4f} seconds")
+    print(f"Comparisons: {comparisons}")
+    print(f"Memory Usage: {memory_used:.2f} KB")
     
+    # Reversed array
+    start_memory = get_memory_usage()
     start_time = time.time()
     sorted_reversed, comparisons = quick_sort(reversed_arr)
-    print(f"Reversed array - Time: {(time.time() - start_time):.4f} seconds, Comparisons: {comparisons}")
+    memory_used = get_memory_usage() - start_memory
+    print(f"\nReversed array - Time: {(time.time() - start_time):.4f} seconds")
+    print(f"Comparisons: {comparisons}")
+    print(f"Memory Usage: {memory_used:.2f} KB")
