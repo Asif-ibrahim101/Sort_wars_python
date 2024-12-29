@@ -1,5 +1,9 @@
+import sys
 import numpy as np
 import time
+
+# for maximum resurssion depth 
+sys.setrecursionlimit(10**6)
 
 def generate_random_numbers(size):
     return np.random.randint(100000, 1000000, size=size)
@@ -47,17 +51,22 @@ def merge_sort(arr):
 def quick_sort(arr):
     comparisons = [0]
     
-    def partition(arr, low, high):
-        pivot = arr[high]
-        i = low - 1
+    def partition(arr, left, right):
+        # using random index as an pivot index
+        random_idx = np.random.randint(left, right + 1)
+
+        # swaping the random element with the last element
+        arr[random_idx], arr[right] = arr[right], arr[random_idx]
+        pivot = arr[right]
+        i = left - 1
         
-        for j in range(low, high):
+        for j in range(left, right):
             comparisons[0] += 1  # Count each comparison with pivot
             if arr[j] <= pivot:
                 i += 1
                 arr[i], arr[j] = arr[j], arr[i]
         
-        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        arr[i + 1], arr[right] = arr[right], arr[i + 1]
         return i + 1
 
     def sort(arr, low, high):
