@@ -21,12 +21,14 @@ def save_sorted_array(arr, algorith, arr_type, size):
     np.savetxt(filepath, arr, fmt= '%d')
     print(f"Saved sorted array to {filepath}")
 
+
+# Generating random numbers btn 100000 to 999999
 def generate_random_numbers(size):
-    return np.random.randint(10000, 100000, size=size)
+    return np.random.choice(range(100000, 1000000), size=size, replace=False)
 
 def generate_reversed_random_numbers(size):
-    numbers = np.arange(999999, 999999-size, -1)
-    return numbers
+    numbers = np.arange(100000, 100000 + size)  # Generating a sequence of unique numbers.
+    return numbers[::-1]  # Reversing the order to get descending data.
 
 # Merge Sort with comparison counter
 def merge_sort(arr):
@@ -98,6 +100,7 @@ def get_memory_usage():
     process = psutil.Process()
     # Get memory info in KB (divide by 1024 to convert from bytes to KB)
     return process.memory_info().rss / 1024
+
 
 # Initialize lists to store metrics for plotting
 merge_sort_random_time, quick_sort_random_time = [], []
