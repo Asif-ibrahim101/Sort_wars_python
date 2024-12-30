@@ -3,7 +3,7 @@ import numpy as np
 import time
 import psutil
 import os
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt #for the graph
 
 # Set recursion limit
 sys.setrecursionlimit(10**6)
@@ -95,6 +95,7 @@ def quick_sort(arr):
     return arr_copy, comparisons[0]
 
 
+# Geting the current memory of the system
 def get_memory_usage():
     # Get the current process
     process = psutil.Process()
@@ -118,6 +119,7 @@ sizes = [10000, 100000]
 for size in sizes:
     print(f"\nTesting arrays of size {size}")
     
+    # Generating the arrays
     random_arr = generate_random_numbers(size)
     reversed_arr = generate_reversed_random_numbers(size)
     
