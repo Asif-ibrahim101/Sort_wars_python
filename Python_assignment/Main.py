@@ -7,6 +7,19 @@ import os
 # Set recursion limit
 sys.setrecursionlimit(10**6)
 
+# Making a dirrectory to store the sorted files
+output_dirrectory = "sorting_results"
+if not os.path.exists(output_dirrectory):
+    os.mkdir(output_dirrectory)
+
+# function to save the arrays
+def save_sorted_array(arr, algorith, arr_type, size):
+    filename = f"{algorith}_{arr_type}_{size}.txt"
+    filepath = os.path.join(output_dirrectory, filename)
+    
+    np.savetxt(filepath, arr, fmt= '%d')
+    print(f"Saved sorted array to {filepath}")
+
 def generate_random_numbers(size):
     return np.random.randint(10000, 100000, size=size)
 
@@ -46,6 +59,7 @@ def merge_sort(arr):
         return merge(left, right)
     
     sorted_arr = sort(arr)
+    
     return sorted_arr, comparisons[0]
 
 # Quick Sort with comparison counter
@@ -99,6 +113,9 @@ for size in sizes:
     start_memory = get_memory_usage()
     start_time = time.time()
     sorted_random, comparisons = merge_sort(random_arr)
+    
+    # saving the arrays
+    save_sorted_array(sorted_random, "merge_sort", "random", size)
     memory_used = get_memory_usage() - start_memory
     print(f"Random array - Time: {(time.time() - start_time):.4f} seconds")
     print(f"Comparisons: {comparisons}")
@@ -108,6 +125,10 @@ for size in sizes:
     start_memory = get_memory_usage()
     start_time = time.time()
     sorted_reversed, comparisons = merge_sort(reversed_arr)
+    
+    # saving the arrays
+    save_sorted_array(sorted_reversed, "merge_sort", "reversed", size)
+    
     memory_used = get_memory_usage() - start_memory
     print(f"\nReversed array - Time: {(time.time() - start_time):.4f} seconds")
     print(f"Comparisons: {comparisons}")
@@ -120,6 +141,10 @@ for size in sizes:
     start_memory = get_memory_usage()
     start_time = time.time()
     sorted_random, comparisons = quick_sort(random_arr)
+    
+    # saving the arrays
+    save_sorted_array(sorted_random, "quick_sort", "random", size)
+    
     memory_used = get_memory_usage() - start_memory
     print(f"Random array - Time: {(time.time() - start_time):.4f} seconds")
     print(f"Comparisons: {comparisons}")
@@ -129,6 +154,10 @@ for size in sizes:
     start_memory = get_memory_usage()
     start_time = time.time()
     sorted_reversed, comparisons = quick_sort(reversed_arr)
+    
+    # saving the arrays
+    save_sorted_array(sorted_reversed, "quick_sort", "reversed", size)
+    
     memory_used = get_memory_usage() - start_memory
     print(f"\nReversed array - Time: {(time.time() - start_time):.4f} seconds")
     print(f"Comparisons: {comparisons}")
