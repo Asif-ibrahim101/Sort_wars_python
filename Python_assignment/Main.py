@@ -5,7 +5,7 @@ import psutil
 import os
 import matplotlib.pyplot as plt #for the graph
 
-# Set recursion limit
+# Setting recursion limit
 sys.setrecursionlimit(10**6)
 
 # Making a dirrectory to store the sorted files
@@ -18,17 +18,17 @@ def save_sorted_array(arr, algorith, arr_type, size):
     filename = f"{algorith}_{arr_type}_{size}.txt"
     filepath = os.path.join(output_dirrectory, filename)
     
-    np.savetxt(filepath, arr, fmt= '%d')
+    np.savetxt(filepath, arr, fmt= '%d') 
     print(f"Saved sorted array to {filepath}")
 
 
 # Generating random numbers btn 100000 to 999999
 def generate_random_numbers(size):
-    return np.random.choice(range(100000, 1000000), size=size, replace=False)
+    return np.random.randint(100000, 1000000, size=size)
 
 def generate_reversed_random_numbers(size):
     numbers = np.arange(100000, 100000 + size)  # Generating a sequence of unique numbers.
-    return numbers[::-1]  # Reversing the order to get descending data.
+    return numbers[::-1]  # Reversing the order to get descending data using python slicing.
 
 # Merge Sort with comparison counter
 def merge_sort(arr):
@@ -104,14 +104,23 @@ def get_memory_usage():
 
 
 # Initialize lists to store metrics for plotting
-merge_sort_random_time, quick_sort_random_time = [], []
-merge_sort_reversed_time, quick_sort_reversed_time = [], []
+merge_sort_random_time = []
+quick_sort_random_time = []
 
-merge_sort_random_memory, quick_sort_random_memory = [], []
-merge_sort_reversed_memory, quick_sort_reversed_memory = [], []
+merge_sort_reversed_time = []
+quick_sort_reversed_time = []
 
-merge_sort_random_comparisons, quick_sort_random_comparisons = [], []
-merge_sort_reversed_comparisons, quick_sort_reversed_comparisons = [], []
+merge_sort_random_memory = []
+quick_sort_random_memory = []
+
+merge_sort_reversed_memory = []
+quick_sort_reversed_memory = []
+
+merge_sort_random_comparisons = []
+quick_sort_random_comparisons = []
+
+merge_sort_reversed_comparisons = [] 
+quick_sort_reversed_comparisons = []
 
 # Test with different array sizes
 sizes = [10000, 100000]
