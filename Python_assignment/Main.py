@@ -36,6 +36,7 @@ def merge_sort(array):
     def sort(array):
         if len(array) <= 1:
             return array.copy()
+        
         mid = len(array) // 2
         left = sort(array[:mid])
         right = sort(array[mid:])
@@ -124,7 +125,7 @@ for size in sizes:
     start_memory = get_memory_usage()
     start_time = time.time()
     sorted_random, comparisons = merge_sort(random_array)
-    memory_used = get_memory_usage() - start_memory
+    memory_used = abs(get_memory_usage() - start_memory)
     time_taken = time.time() - start_time
 
     merge_sort_random_times.append(time_taken)
@@ -136,7 +137,7 @@ for size in sizes:
     start_memory = get_memory_usage()
     start_time = time.time()
     sorted_reversed, comparisons = merge_sort(reversed_array)
-    memory_used = get_memory_usage() - start_memory
+    memory_used = abs(get_memory_usage() - start_memory)
     time_taken = time.time() - start_time
 
     merge_sort_reversed_times.append(time_taken)
@@ -148,7 +149,7 @@ for size in sizes:
     start_memory = get_memory_usage()
     start_time = time.time()
     sorted_random, comparisons = quick_sort(random_array)
-    memory_used = get_memory_usage() - start_memory
+    memory_used = abs(get_memory_usage() - start_memory)
     time_taken = time.time() - start_time
 
     quick_sort_random_times.append(time_taken)
@@ -160,7 +161,7 @@ for size in sizes:
     start_memory = get_memory_usage()
     start_time = time.time()
     sorted_reversed, comparisons = quick_sort(reversed_array)
-    memory_used = get_memory_usage() - start_memory
+    memory_used = abs(get_memory_usage() - start_memory)
     time_taken = time.time() - start_time
 
     quick_sort_reversed_times.append(time_taken)
